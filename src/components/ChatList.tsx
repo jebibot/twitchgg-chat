@@ -33,7 +33,11 @@ function ChatList({ videoId }: ChatListProps) {
   }
 
   useEffect(() => {
-    const abortController = new AbortController();
+    let abortController: AbortController | undefined;
+    if ("AbortController" in window) {
+      abortController = new AbortController();
+    }
+
     const authProvider = new StaticAuthProvider(
       process.env.REACT_APP_TWITCH_CLIENT_ID || ""
     );
@@ -42,7 +46,7 @@ function ChatList({ videoId }: ChatListProps) {
       fetchOptions: {
         // @ts-ignore
         keepalive: true,
-        signal: abortController.signal,
+        signal: abortController?.signal,
       },
     });
 
@@ -78,7 +82,7 @@ function ChatList({ videoId }: ChatListProps) {
     })().catch(handleError);
 
     return () => {
-      abortController.abort();
+      if (abortController) abortController.abort();
     };
   }, [videoId]);
 
