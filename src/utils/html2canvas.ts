@@ -1,4 +1,4 @@
-import html2canvas from "html2canvas";
+import html2canvas from "@jebibot/html2canvas";
 
 export default async function captureToPng(
   element: HTMLElement,
