@@ -1,2 +1,14 @@
 /static/*
   Cache-Control: max-age=31536000
+
+/logo192.png
+  Cache-Control: max-age=7776000
+
+/logo512.png
+  Cache-Control: max-age=7776000
+
+/favicon.ico
+  Cache-Control: max-age=7776000
+
+/manifest.json
+  Cache-Control: max-age=2592000
