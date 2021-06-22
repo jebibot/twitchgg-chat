@@ -23,7 +23,7 @@ function ChatBadge({ badge }: ChatBadgeProps) {
       srcSet={`${b.getImageUrl(1)} 1x, ${b.getImageUrl(2)} 2x, ${b.getImageUrl(
         4
       )} 4x`}
-      alt={badge._id}
+      alt={b.title}
       className="chat-badge align-middle"
     ></img>
   );
