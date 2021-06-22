@@ -91,8 +91,8 @@ function ChatList({ videoId }: ChatListProps) {
           <button
             type="button"
             className="btn btn-primary f-14"
-            aria-label="Download"
-            title="Download"
+            aria-label="Download as an image"
+            title="Download as an image"
             onClick={() => {
               if (!chatList.current) return;
               captureToPng(chatList.current, `chat-${videoId}.png`);
