@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import * as CSS from "csstype";
 import ChatBadge from "./ChatBadge";
+import ChatEmoticon from "./ChatEmoticon";
 import { AppDispatch } from "../App";
 import { ChatEntry } from "../utils/comments";
 import { formatTimestamp } from "../utils/utils";
@@ -37,12 +38,11 @@ function Chat({ chat }: ChatProps) {
       <span className="chat-message">
         {chat.message.map((m, i) =>
           m.emoticon ? (
-            <img
+            <ChatEmoticon
               key={i}
-              src={`https://static-cdn.jtvnw.net/emoticons/v1/${m.emoticon.emoticon_id}/1.0`}
-              alt={m.text}
-              className="my-n1 align-middle"
-            ></img>
+              emoticonId={m.emoticon.emoticon_id}
+              name={m.text}
+            ></ChatEmoticon>
           ) : (
             <span key={i}>{m.text}</span>
           )

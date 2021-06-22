@@ -11,17 +11,21 @@ function ChatBadge({ badge }: ChatBadgeProps) {
   const badges = useContext(BadgesContext);
   if (!badges) return null;
 
-  let url = "";
+  let b;
   try {
-    url = badges
-      .getBadgeSet(badge._id)
-      .getVersion(badge.version)
-      .getImageUrl(1);
+    b = badges.getBadgeSet(badge._id).getVersion(badge.version);
   } catch (err) {
     return null;
   }
   return (
-    <img src={url} alt={badge._id} className="chat-badge align-middle"></img>
+    <img
+      src={b.getImageUrl(1)}
+      srcSet={`${b.getImageUrl(1)} 1x, ${b.getImageUrl(2)} 2x, ${b.getImageUrl(
+        4
+      )} 4x`}
+      alt={badge._id}
+      className="chat-badge align-middle"
+    ></img>
   );
 }
 
