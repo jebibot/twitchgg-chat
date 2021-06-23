@@ -5,7 +5,7 @@ import ChatEmoticon from "./ChatEmoticon";
 import { AppDispatch } from "../App";
 import { ChatEntry } from "../utils/comments";
 import { formatTimestamp } from "../utils/utils";
-import "./Chat.css";
+import styles from "./Chat.module.css";
 
 type ChatProps = {
   chat: ChatEntry;
@@ -16,7 +16,7 @@ function Chat({ chat }: ChatProps) {
   return (
     <div className="px-3 py-2">
       <span
-        className="chat-timestamp mr-2"
+        className={`${styles.timestamp} mr-2`}
         onClick={() =>
           appDispatch?.({ type: "seek", timestamp: chat.timestamp })
         }
@@ -31,11 +31,11 @@ function Chat({ chat }: ChatProps) {
       <span style={{ color: chat.color } as CSS.Properties}>
         <span className="font-weight-bold">{chat.display_name}</span>
         {chat.display_name.toLowerCase() !== chat.name && (
-          <span className="chat-username"> ({chat.name})</span>
+          <span className={styles.username}> ({chat.name})</span>
         )}
       </span>
       <span aria-hidden="true">: </span>
-      <span className="chat-message">
+      <span className={styles.message}>
         {chat.message.map((m, i) =>
           m.emoticon ? (
             <ChatEmoticon

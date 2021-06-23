@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { BadgesContext } from "./ChatList";
 import { BadgeData } from "../utils/comments";
-import "./ChatBadge.css";
+import styles from "./ChatBadge.module.css";
 
 type ChatBadgeProps = {
   badge: BadgeData;
@@ -24,7 +24,7 @@ function ChatBadge({ badge }: ChatBadgeProps) {
         4
       )} 4x`}
       alt={b.title}
-      className="chat-badge align-middle"
+      className={`${styles.badge} align-middle`}
     ></img>
   );
 }

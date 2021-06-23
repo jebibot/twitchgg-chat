@@ -1,13 +1,13 @@
-.chat-timestamp {
+.timestamp {
   cursor: pointer;
   color: #53535f;
   font-variant-numeric: tabular-nums;
 }
 
-.chat-username {
+.username {
   opacity: 0.7;
 }
 
-.chat-message {
+.message {
   color: #0e0e10;
 }

@@ -1,4 +1,4 @@
-import "./ProgressBar.css";
+import styles from "./ProgressBar.module.css";
 
 type ProgressBarProps = {
   error: string;
@@ -23,7 +23,7 @@ function ProgressBar({ error, progress }: ProgressBarProps) {
   }
 
   return (
-    <div className="progress m-2">
+    <div className={`progress m-2 ${styles.progress}`}>
       <div
         className={`progress-bar progress-bar-striped progress-bar-animated${className} f-14`}
         style={{ width }}
