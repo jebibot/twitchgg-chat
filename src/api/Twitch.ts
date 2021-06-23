@@ -158,16 +158,23 @@ type BadgesData = {
 
 class Twitch {
   signal?: AbortSignal;
+  keepalive?: boolean;
 
   constructor(signal?: AbortSignal) {
     this.signal = signal;
+    this.keepalive = true;
   }
 
-  static async fetchWithRetry<T>(input: RequestInfo, init: RequestInit) {
+  async getWithRetry<T>(input: RequestInfo, headers: Record<string, string>) {
     let body;
     for (let i = 0; i < MAX_RETRIES; i++) {
       try {
-        const res = await fetch(input, init);
+        const res = await fetch(input, {
+          method: "GET",
+          headers,
+          keepalive: this.keepalive,
+          signal: this.signal,
+        });
         body = await res.json();
         if (!res.ok) {
           throw new Error(
@@ -181,6 +188,9 @@ ${JSON.stringify(body, null, 2)}`
         if (i === MAX_RETRIES - 1 || err.name === "AbortError") {
           throw err;
         }
+        if (err instanceof TypeError) {
+          this.keepalive = undefined;
+        }
         await new Promise((r) => setTimeout(r, Math.pow(2, i) * 200));
       }
     }
@@ -188,30 +198,16 @@ ${JSON.stringify(body, null, 2)}`
   }
 
   async callApi<T>(path: string) {
-    const url = `${API_URL}${path}`;
-    const options = {
-      method: "GET",
-      headers: {
-        Accept: "application/vnd.twitchtv.v5+json",
-        "Client-ID": process.env.REACT_APP_TWITCH_CLIENT_ID ?? "",
-      },
-      keepalive: true,
-      signal: this.signal,
-    };
-    return Twitch.fetchWithRetry<T>(url, options);
+    return this.getWithRetry<T>(`${API_URL}${path}`, {
+      Accept: "application/vnd.twitchtv.v5+json",
+      "Client-ID": process.env.REACT_APP_TWITCH_CLIENT_ID ?? "",
+    });
   }
 
   async callBadgesApi<T>(path: string) {
-    const url = `${BADGES_API_URL}${path}`;
-    const options = {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-      },
-      keepalive: true,
-      signal: this.signal,
-    };
-    return Twitch.fetchWithRetry<T>(url, options);
+    return this.getWithRetry<T>(`${BADGES_API_URL}${path}`, {
+      Accept: "application/json",
+    });
   }
 
   async getVideo(videoId: string) {
