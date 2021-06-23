@@ -5,7 +5,7 @@ import * as Sentry from "@sentry/react";
 import ProgressBar from "./ProgressBar";
 import Chat from "./Chat";
 import Twitch, { BadgeSetsData } from "../api/Twitch";
-import getChats, { ChatEntry, isStreamer } from "../utils/comments";
+import getChats, { ChatEntry, isStreamer } from "../utils/chats";
 import captureToPng from "../utils/html2canvas";
 
 export const BadgesContext = createContext<BadgeSetsData | undefined>(

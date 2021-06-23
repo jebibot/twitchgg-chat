@@ -3,7 +3,7 @@ import * as CSS from "csstype";
 import ChatBadge from "./ChatBadge";
 import ChatEmoticon from "./ChatEmoticon";
 import { AppDispatch } from "../App";
-import { ChatEntry } from "../utils/comments";
+import { ChatEntry } from "../utils/chats";
 import { formatTimestamp } from "../utils/utils";
 import styles from "./Chat.module.css";
 
