@@ -178,11 +178,10 @@ ${JSON.stringify(body, null, 2)}`
         }
         break;
       } catch (err) {
-        if (i < MAX_RETRIES - 1) {
-          await new Promise((r) => setTimeout(r, Math.pow(2, i) * 200));
-        } else {
+        if (i === MAX_RETRIES - 1 || err.name === "AbortError") {
           throw err;
         }
+        await new Promise((r) => setTimeout(r, Math.pow(2, i) * 200));
       }
     }
     return body as T;
