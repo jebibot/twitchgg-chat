@@ -6,7 +6,9 @@ const BOTS = [
   "bbangddeock",
   "cubicbot_",
   "streamelements",
+  "streamlabs",
   "twipkr",
+  "dolmaig",
 ];
 const BADGES = ["broadcaster", "vip", "moderator", "partner"];
 
