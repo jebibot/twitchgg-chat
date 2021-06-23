@@ -28,7 +28,7 @@ function ChatList({ videoId }: ChatListProps) {
   function handleError(err: Error) {
     Sentry.captureException(err);
     if (err.name === "AbortError") return;
-    setError((e) => (e ? `${e}, ${err.message}` : err.message));
+    setError((e) => `${e ? `${e}, ` : ""}${err.name}: ${err.message}`);
   }
 
   useEffect(() => {
