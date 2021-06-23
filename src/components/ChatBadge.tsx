@@ -17,6 +17,7 @@ function ChatBadge({ badge }: ChatBadgeProps) {
       src={b.image_url_1x}
       srcSet={`${b.image_url_1x} 1x, ${b.image_url_2x} 2x, ${b.image_url_4x} 4x`}
       alt={b.title}
+      title={b.title}
       className={`${styles.badge} align-middle`}
     ></img>
   );
