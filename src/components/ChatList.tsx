@@ -1,15 +1,14 @@
 import { useState, useEffect, useRef, createContext } from "react";
-import { ApiClient, ChatBadgeList } from "twitch";
-import { StaticAuthProvider } from "twitch-auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import * as Sentry from "@sentry/react";
 import ProgressBar from "./ProgressBar";
 import Chat from "./Chat";
-import fetchComments, { ChatEntry, isStreamer } from "../utils/comments";
+import Twitch, { BadgeSetsData } from "../api/Twitch";
+import getChats, { ChatEntry, isStreamer } from "../utils/comments";
 import captureToPng from "../utils/html2canvas";
 
-export const BadgesContext = createContext<ChatBadgeList | undefined>(
+export const BadgesContext = createContext<BadgeSetsData | undefined>(
   undefined
 );
 
@@ -20,7 +19,7 @@ type ChatListProps = {
 function ChatList({ videoId }: ChatListProps) {
   const chatList = useRef<HTMLDivElement>(null);
 
-  const [badges, setBadges] = useState<ChatBadgeList>();
+  const [badges, setBadges] = useState<BadgeSetsData>();
   const [videoLength, setVideoLength] = useState(Infinity);
   const [chats, setChats] = useState<ChatEntry[]>([]);
   const [lastChat, setLastChat] = useState(0);
@@ -38,41 +37,25 @@ function ChatList({ videoId }: ChatListProps) {
       abortController = new AbortController();
     }
 
-    const authProvider = new StaticAuthProvider(
-      process.env.REACT_APP_TWITCH_CLIENT_ID || ""
-    );
-    const apiClient = new ApiClient({
-      authProvider,
-      fetchOptions: {
-        // @ts-ignore
-        keepalive: true,
-        signal: abortController?.signal,
-      },
-    });
+    const twitch = new Twitch(abortController?.signal);
 
     setChats([]);
     setError("");
 
     (async function () {
-      const video = await apiClient.kraken.videos.getVideo(videoId);
+      const video = await twitch.getVideo(videoId);
       setVideoLength(video.length);
 
-      setBadges(await apiClient.badges.getChannelBadges(video.channelId, true));
+      setBadges(await twitch.getChannelBadges(video.channel._id));
     })().catch(handleError);
 
     (async function () {
-      let next: string | undefined = "";
-      while (next != null) {
-        const {
-          chats,
-          _next,
-        }: { chats: ChatEntry[]; _next: string | undefined } =
-          await fetchComments(apiClient, videoId, next);
-        if (chats.length) {
+      for await (const comments of twitch.iterateComments(videoId)) {
+        if (comments?.length) {
+          const chats = await getChats(comments);
           setLastChat(chats[chats.length - 1].timestamp);
           setChats((c) => c.concat(chats.filter(isStreamer)));
         }
-        next = _next;
       }
 
       setLastChat(Infinity);
@@ -82,7 +65,7 @@ function ChatList({ videoId }: ChatListProps) {
     })().catch(handleError);
 
     return () => {
-      if (abortController) abortController.abort();
+      abortController?.abort();
     };
   }, [videoId]);
 

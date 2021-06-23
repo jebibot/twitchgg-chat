@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { BadgesContext } from "./ChatList";
-import { BadgeData } from "../utils/comments";
+import { BadgeData } from "../api/Twitch";
 import styles from "./ChatBadge.module.css";
 
 type ChatBadgeProps = {
@@ -9,20 +9,13 @@ type ChatBadgeProps = {
 
 function ChatBadge({ badge }: ChatBadgeProps) {
   const badges = useContext(BadgesContext);
-  if (!badges) return null;
+  const b = badges?.[badge._id]?.versions[badge.version];
+  if (!b) return null;
 
-  let b;
-  try {
-    b = badges.getBadgeSet(badge._id).getVersion(badge.version);
-  } catch (err) {
-    return null;
-  }
   return (
     <img
-      src={b.getImageUrl(1)}
-      srcSet={`${b.getImageUrl(1)} 1x, ${b.getImageUrl(2)} 2x, ${b.getImageUrl(
-        4
-      )} 4x`}
+      src={b.image_url_1x}
+      srcSet={`${b.image_url_1x} 1x, ${b.image_url_2x} 2x, ${b.image_url_4x} 4x`}
       alt={b.title}
       className={`${styles.badge} align-middle`}
     ></img>
