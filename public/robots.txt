@@ -2,5 +2,6 @@
 User-agent: *
 Disallow: /
 Allow : /$
+Allow /index.html
 Allow: *.js
 Allow: *.css
