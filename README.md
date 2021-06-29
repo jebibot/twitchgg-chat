@@ -2,6 +2,11 @@
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/67b35311-3cfa-4460-99ea-45c33e9ce05e/deploy-status)](https://app.netlify.com/sites/twitchgg-chat/deploys)
 
+## Environment
+
+- `REACT_APP_TWITCH_CLIENT_ID`: [Twitch Devlopers Console > Applications > Client ID](https://dev.twitch.tv/console/apps)
+- `REACT_APP_SENTRY_DSN` (optional): [Settings > Projects > Client Keys](https://sentry.io/)
+
 ## Development
 
 In the project directory, you can run:
