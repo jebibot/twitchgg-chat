@@ -1,5 +1,7 @@
 # Twitchgg Chat
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/67b35311-3cfa-4460-99ea-45c33e9ce05e/deploy-status)](https://app.netlify.com/sites/twitchgg-chat/deploys)
+
 ## Development
 
 In the project directory, you can run:
