@@ -10,10 +10,10 @@ function ChatEmoticon({ emoticonId, name }: ChatEmoticonProps) {
   return (
     <img
       src={`${EMOTICON_URL(emoticonId, 1)}`}
-      srcSet={`${EMOTICON_URL(emoticonId, 1)} 1.0x, ${EMOTICON_URL(
+      srcSet={`${EMOTICON_URL(emoticonId, 1)} 1x, ${EMOTICON_URL(
         emoticonId,
         2
-      )} 2.0x, ${EMOTICON_URL(emoticonId, 3)} 3.0x`}
+      )} 2x, ${EMOTICON_URL(emoticonId, 3)} 4x`}
       alt={name}
       className="my-n1 align-middle"
     ></img>
