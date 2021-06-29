@@ -5,9 +5,9 @@ import { Integrations } from "@sentry/tracing";
 import App from "./App";
 import "./index.css";
 
-if (process.env.NODE_ENV === "production") {
+if (process.env.REACT_APP_SENTRY_DSN) {
   Sentry.init({
-    dsn: "https://ff81205a7c8e4fc3870f3895e9151ea4@o75632.ingest.sentry.io/5827569",
+    dsn: process.env.REACT_APP_SENTRY_DSN,
     integrations: [new Integrations.BrowserTracing()],
     tracesSampleRate: 1.0,
   });
