@@ -109,7 +109,7 @@ export type BadgeData = {
 type MessageData = {
   body: string;
   emoticons?: EmoticonData[];
-  fragments: FragmentData[];
+  fragments?: FragmentData[];
   is_action: boolean;
   user_badges?: BadgeData[];
   user_color?: string;

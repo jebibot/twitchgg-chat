@@ -32,7 +32,7 @@ async function getChats(comments: CommentData[]): Promise<ChatEntry[]> {
     name: c.commenter.name,
     color: colorAdjuster.process(c.message.user_color),
     badges: c.message.user_badges,
-    message: c.message.fragments,
+    message: c.message.fragments ?? [{ text: c.message.body }],
   }));
 }
 
