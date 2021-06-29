@@ -45,8 +45,18 @@ function App() {
             </div>
           </div>
         ) : (
-          <div className="alert alert-danger m-3" role="alert">
-            Video ID not found!
+          <div className="row no-gutters f-14 p-3">
+            <div className="col-12 border border-primary rounded-pill px-3 py-2">
+              https://www.twitch<strong>gg</strong>.tv/videos/12345678
+            </div>
+            <div className="col-12 px-3 mt-2">
+              Insert "<strong>gg</strong>" after the word "twitch" in the link
+              to replay chats by streamers from Twitch streams.
+            </div>
+            <div className="col-12 px-3 mt-2" lang="ko">
+              트위치 다시보기 링크의 "twitch" 뒤에 "<strong>gg</strong>"를
+              삽입하면 스트리머의 채팅을 모아볼 수 있습니다.
+            </div>
           </div>
         )}
       </div>
