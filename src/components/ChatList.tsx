@@ -99,6 +99,7 @@ function ChatList({ videoId }: ChatListProps) {
             title="Info"
             target="_blank"
             rel="noopener noreferrer"
+            role="button"
           >
             <FontAwesomeIcon icon={faInfoCircle} />
           </a>
