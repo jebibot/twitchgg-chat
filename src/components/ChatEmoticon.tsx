@@ -1,3 +1,5 @@
+import styles from "./ChatEmoticon.module.css";
+
 const EMOTICON_URL = (id: string, scale: number) =>
   `https://static-cdn.jtvnw.net/emoticons/v2/${id}/default/light/${scale}.0`;
 
@@ -15,7 +17,7 @@ function ChatEmoticon({ emoticonId, name }: ChatEmoticonProps) {
         2
       )} 2x, ${EMOTICON_URL(emoticonId, 3)} 4x`}
       alt={name}
-      className="my-n1 align-middle"
+      className={`${styles.emoticon} my-n1 align-middle`}
     ></img>
   );
 }
