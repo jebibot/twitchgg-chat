@@ -93,7 +93,7 @@ function ChatList({ videoId }: ChatListProps) {
         </div>
         <div className="p-1">
           <a
-            href="https://www.notion.so/Rechat-63ee83dd92384963a162895ac2553f70"
+            href="https://twgg.notion.site/Rechat-63ee83dd92384963a162895ac2553f70"
             className="btn btn-secondary f-14"
             aria-label="Info"
             title="Info"
