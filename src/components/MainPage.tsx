@@ -16,7 +16,7 @@ function MainPage() {
       </p>
       <a
         className="btn btn-primary btn-lg"
-        href="https://www.notion.so/Rechat-63ee83dd92384963a162895ac2553f70"
+        href="https://twgg.notion.site/Rechat-63ee83dd92384963a162895ac2553f70"
         target="_blank"
         rel="noopener noreferrer"
         role="button"
