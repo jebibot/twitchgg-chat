@@ -43,10 +43,18 @@ function ChatList({ videoId }: ChatListProps) {
     setError("");
 
     (async function () {
-      const video = await twitch.getVideo(videoId);
-      setVideoLength(video.length);
-
-      setBadges(await twitch.getChannelBadges(video.channel._id));
+      const video = await twitch.getVideoDuration(videoId);
+      if (video) {
+        const match = video.duration.match(/^(\d+h)?(\d+m)?(\d+s)?$/);
+        if (match) {
+          setVideoLength(
+            3600 * parseInt(match[1] || "0") +
+              60 * parseInt(match[2] || "0") +
+              parseInt(match[3] || "0")
+          );
+        }
+        setBadges(await twitch.getChannelBadges(video.userId));
+      }
     })().catch(handleError);
 
     (async function () {

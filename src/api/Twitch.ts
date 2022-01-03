@@ -24,55 +24,17 @@
  * SOFTWARE.
  */
 const API_URL = "https://api.twitch.tv/kraken/";
+const API_WORKER_URL = "https://api.twgg.workers.dev/";
 const BADGES_API_URL = "https://badges.twitch.tv/v1/badges/";
 
 const MAX_RETRIES = 5;
 
-type VideoChannelData = {
-  _id: string;
-  name: string;
-  display_name: string;
-};
-
-type VideoThumbSize = "large" | "medium" | "small" | "template";
-
-type VideoMutedSegment = {
-  duration: number;
-  offset: number;
-};
-
-type VideoThumbnail = {
-  type: string;
-  url: string;
-};
-
-type VideoViewability = "public" | "private";
-
 type VideoData = {
-  _id: string;
-  broadcast_id: string;
-  broadcast_type: string;
-  channel: VideoChannelData;
-  created_at: string;
-  description: string;
-  description_html: string;
-  fps: Record<string, number>;
-  game: string;
-  language: string;
-  length: number;
-  muted_segments: VideoMutedSegment[];
-  preview: Record<VideoThumbSize, string>;
-  published_at: string;
-  resolutions: Record<string, string>;
-  status: string;
-  tag_list: string;
-  thumbnails: Record<VideoThumbSize, VideoThumbnail[]>;
-  title: string;
-  url: string;
-  viewable: VideoViewability;
-  viewable_at: string | null;
-  views: number;
+  id: string;
+  duration: string;
+  userId: string;
 };
+type Videos = { [id: string]: VideoData };
 
 type CommenterData = {
   _id: string;
@@ -165,7 +127,7 @@ class Twitch {
     this.keepalive = true;
   }
 
-  async getWithRetry<T>(input: RequestInfo, headers: Record<string, string>) {
+  async getWithRetry<T>(input: RequestInfo, headers?: Record<string, string>) {
     let body;
     for (let i = 0; i < MAX_RETRIES; i++) {
       try {
@@ -210,8 +172,11 @@ ${JSON.stringify(body, null, 2)}`
     });
   }
 
-  async getVideo(videoId: string) {
-    return this.callApi<VideoData>(`videos/${videoId}`);
+  async getVideoDuration(videoId: string) {
+    const result = await this.getWithRetry<Videos>(
+      `${API_WORKER_URL}videos?id=${videoId}`
+    );
+    return result[videoId];
   }
 
   async getComments(videoId: string, cursor: string) {
