@@ -1,8 +1,8 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
 Disallow: /
-Allow : /$
-Allow /index.html
+Allow: /$
+Allow: /index.html
 Allow: *.json
 Allow: *.xml
 Allow: *.js
